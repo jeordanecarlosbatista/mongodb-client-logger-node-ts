@@ -1,12 +1,17 @@
-import { Document, MongoClient } from "mongodb";
+import { MongoClient } from "mongodb";
 import { v4 as uuid } from "uuid";
 import Mongodb from "../src/mongo-client";
+import Logger from "../src/logger-client";
+
 
 const uri =
     "mongodb://dev:dev@localhost:27017";
 const collection = "movies";
 const database = "mongo-node";
-const client = new Mongodb(new MongoClient(uri), database);
+const serviceName = "mongo-client-node-ts";
+const env = "dev";
+const logger = new Logger(serviceName, env);
+const client = new Mongodb(new MongoClient(uri), database, logger);
 
 export interface IMDB {
     rating: number;
@@ -52,7 +57,7 @@ afterEach(async () => {
 it("should add a movie", async () => {
     const movie = mockMovie();
     const { _id } = movie;
-    const { insertedId } = await client.insertOne(collection, movie);
+    const { insertedId } = await client.insertOne<Movie>(collection, movie);
     const result = await client.findOne<Movie>(collection, { _id });
     expect(insertedId).toBe(_id);
     expect(result).toEqual(movie);
