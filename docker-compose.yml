@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+
+  mongo:
+    image: mongo:5.0.6
+    container_name: mongo-node-ts
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: dev
+      MONGO_INITDB_DATABASE: mongo-node
