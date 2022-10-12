@@ -140,7 +140,7 @@ it("should delete a movie", async () => {
     expect(result).toBe(notFoundMovie);
 })
 
-it.only("should delete movies", async () => {
+it("should delete movies", async () => {
     const count = 10;
     const movies = Array(count).fill(null).map(_ => mockMovie());
     await client.insertMany(collection, movies);
